@@ -35,17 +35,18 @@ app.get("/api/hello", function (req, res) {
 */
 
 app.get("/api/:date?", (req, res) => {
-  const { date } = req.params;
+  const { date } = req.params; //getting response from url
   
-  const dateString = { date }.date
-  console.log("datestring: "+ dateString)
+  const dateString = { date }.date //assigning variable to date provided through url parameter
+
   
   //utc string time working
   const utcTime = new Date(Date.parse(dateString));
-  console.log("utcTime:" + utcTime)
-
+  
+// getting unix time, need to set Date.parse to parse a UTC date to Unix
   const unixTime = Date.parse(utcTime)
   
+   // if catch function fails, shows actual timestamp
     if (dateString) {
     res.json({ unix: unixTime, utc: utcTime })
   } else {
