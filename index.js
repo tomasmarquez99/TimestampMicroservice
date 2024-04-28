@@ -39,16 +39,20 @@ app.get("/api/:date?", (req, res) => {
   
   const dateString = { date }.date //assigning variable to date provided through url parameter
 
-  console.log(dateString * 1)
-
+  
 
   if(dateString > 0 ){
-  const unixTime = new Date(dateString * 1);
-  console.log("got number")
-
-  const responseUTC = unixTime.toUTCString()
+    const dateUnix = (dateString * 1)
+    console.log(dateUnix)
+  const time = new Date(dateUnix);
   
-    res.json({ unix: dateString, utc: responseUTC })
+  
+  const unixTime = time.valueOf()
+  console.log("got number" + "timenumber: " + unixTime)
+
+  const responseUTC = time.toUTCString()
+  
+    res.json({ unix: unixTime, utc: responseUTC })
   }
   
    // if catch function fails, shows actual
