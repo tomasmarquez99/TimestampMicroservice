@@ -39,11 +39,9 @@ app.get("/api/:date?", (req, res) => {
   
   const dateString = { date }.date //assigning variable to date provided through url parameter
 
-  
-
   if(dateString > 0 ){
     const dateUnix = (dateString * 1)
-    console.log(dateUnix)
+  
   const time = new Date(dateUnix);
   
   
@@ -57,15 +55,18 @@ app.get("/api/:date?", (req, res) => {
   
    // if catch function fails, shows actual
    else if (dateString) {
-    console.log("got string")
   //utc string time working
   const utcTime = new Date(Date.parse(dateString));
   const responseUTC = utcTime.toUTCString()
   // getting unix time, need to set Date.parse to parse a UTC date to Unix
   const unixTime = Date.parse(utcTime)
 
-    res.json({ unix: unixTime, utc: responseUTC })
-  } else {
+  if(responseUTC === "Invalid Date"){
+    res.json({error: responseUTC})
+  } else{res.json({ unix: unixTime, utc: responseUTC })}
+  }
+  
+  else {
     //working - applies when there isn't parameter text for /api/...
     const unixDate = Date.now()
     const utcDate = new Date(unixDate)
